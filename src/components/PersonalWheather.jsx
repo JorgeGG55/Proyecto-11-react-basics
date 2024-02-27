@@ -1,50 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import useWeatherData from '../hooks/useWeatherData';
 
 const API_KEY = '8aa9acc3df268e90c8c4e6457d3254ab';
 
+const ElementoTabla = ({ label, value }) => (
+  <tr>
+    <td className="tableLabel">{label}:</td>
+    <td>{value}</td>
+  </tr>
+);
+
 const PersonalWeather = () => {
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
-        );
-        setWeatherData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (latitude && longitude) {
-      fetchWeather();
-    }
-  }, [latitude, longitude]);
-
-  useEffect(() => {
-    const getLocation = () => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLatitude(latitude);
-          setLongitude(longitude);
-        },
-        (error) => {
-          console.error(error);
-          setError(
-            'Geolocation permission denied. Please enable geolocation to use the application.'
-          );
-        }
-      );
-    };
-
-    getLocation();
-  }, []);
+  const { weatherData, error } = useWeatherData(API_KEY);
 
   return (
     <div>
@@ -67,30 +34,21 @@ const PersonalWeather = () => {
               <div>
                 <table className="weatherTable">
                   <tbody>
-                    <tr>
-                      <td className="tableLabel">Feels like:</td>
-                      <td>{(weatherData.main.feels_like - 273).toFixed(2)}°C</td>
-                    </tr>
-                    <tr>
-                      <td className="tableLabel">Humidity:</td>
-                      <td>{weatherData.main.humidity}%</td>
-                    </tr>
-                    <tr>
-                      <td className="tableLabel">Pressure:</td>
-                      <td>{weatherData.main.pressure} hPa</td>
-                    </tr>
-                    <tr>
-                      <td className="tableLabel">Max Temperature:</td>
-                      <td>{(weatherData.main.temp_max - 273).toFixed(2)}°C</td>
-                    </tr>
-                    <tr>
-                      <td className="tableLabel">Min Temperature:</td>
-                      <td>{(weatherData.main.temp_min - 273).toFixed(2)}°C</td>
-                    </tr>
-                    <tr>
-                      <td className="tableLabel">Wind Speed:</td>
-                      <td>{weatherData.wind.speed} m/s</td>
-                    </tr>
+                    <ElementoTabla
+                      label="Feels like"
+                      value={(weatherData.main.feels_like - 273).toFixed(2) + '°C'}
+                    />
+                    <ElementoTabla label="Humidity" value={weatherData.main.humidity + '%'} />
+                    <ElementoTabla label="Pressure" value={weatherData.main.pressure + ' hPa'} />
+                    <ElementoTabla
+                      label="Max Temperature"
+                      value={(weatherData.main.temp_max - 273).toFixed(2) + '°C'}
+                    />
+                    <ElementoTabla
+                      label="Min Temperature"
+                      value={(weatherData.main.temp_min - 273).toFixed(2) + '°C'}
+                    />
+                    <ElementoTabla label="Wind Speed" value={weatherData.wind.speed + ' m/s'} />
                   </tbody>
                 </table>
               </div>

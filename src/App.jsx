@@ -1,6 +1,29 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
+const Navbar = ({ isMenuOpen, toggleMenu }) => {
+  return (
+    <div className={`sidenav ${isMenuOpen ? 'open' : ''}`}>
+      <div className="menu-icon" onClick={toggleMenu}>
+        <div className="bar1"></div>
+        <div className="bar2"></div>
+        <div className="bar3"></div>
+      </div>
+      <nav>
+        <NavLink className="NavLink" to="" onClick={toggleMenu}>
+          Home
+        </NavLink>
+        <NavLink className="NavLink" to="local" onClick={toggleMenu}>
+          Local Forecast
+        </NavLink>
+        <NavLink className="NavLink" to="cities" onClick={toggleMenu}>
+          Cities Forecast
+        </NavLink>
+      </nav>
+    </div>
+  );
+};
+
 const App = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -11,24 +34,7 @@ const App = () => {
   return (
     <>
       <header>
-        <div className={`sidenav ${isMenuOpen ? 'open' : ''}`}>
-          <div className="menu-icon" onClick={toggleMenu}>
-            <div className="bar1"></div>
-            <div className="bar2"></div>
-            <div className="bar3"></div>
-          </div>
-          <nav>
-            <NavLink className="NavLink" to="" onClick={toggleMenu}>
-              Home
-            </NavLink>
-            <NavLink className="NavLink" to="local" onClick={toggleMenu}>
-              Local Forecast
-            </NavLink>
-            <NavLink className="NavLink" to="cities" onClick={toggleMenu}>
-              Cities Forecast
-            </NavLink>
-          </nav>
-        </div>
+        <Navbar isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <h1>Weather App</h1>
         <nav className="desktopNav">
           <NavLink className="NavLink" to="">
