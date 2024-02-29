@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import './App.css';
 
-const Navbar = ({ isMenuOpen, toggleMenu }) => {
+const Navbar = ({ toggleMenu }) => {
   return (
-    <div className={`sidenav ${isMenuOpen ? 'open' : ''}`}>
-      <div className="menu-icon" onClick={toggleMenu}>
-        <div className="bar1"></div>
-        <div className="bar2"></div>
-        <div className="bar3"></div>
-      </div>
-      <nav>
-        <NavLink className="NavLink" to="" onClick={toggleMenu}>
-          Home
-        </NavLink>
-        <NavLink className="NavLink" to="local" onClick={toggleMenu}>
-          Local Forecast
-        </NavLink>
-        <NavLink className="NavLink" to="cities" onClick={toggleMenu}>
-          Cities Forecast
-        </NavLink>
-      </nav>
-    </div>
+    <nav className="navbar">
+      <NavLink className="navLink" to="" onClick={toggleMenu}>
+        Home
+      </NavLink>
+      <NavLink className="navLink" to="local" onClick={toggleMenu}>
+        Local Forecast
+      </NavLink>
+      <NavLink className="navLink" to="cities" onClick={toggleMenu}>
+        Cities Forecast
+      </NavLink>
+    </nav>
   );
 };
 
@@ -34,19 +28,18 @@ const App = () => {
   return (
     <>
       <header>
-        <Navbar isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        <div className={`sidenav ${isMenuOpen ? 'open' : ''}`}>
+          <Navbar toggleMenu={toggleMenu} />
+        </div>
+        <div className={`menu-icon ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
+        </div>
         <h1>Weather App</h1>
-        <nav className="desktopNav">
-          <NavLink className="NavLink" to="">
-            Home
-          </NavLink>
-          <NavLink className="NavLink" to="local">
-            Local Forecast
-          </NavLink>
-          <NavLink className="NavLink" to="cities">
-            Cities Forecast
-          </NavLink>
-        </nav>
+        <div className="nav-links">
+          <Navbar />
+        </div>
       </header>
       <main>
         <div className="firstContainer">

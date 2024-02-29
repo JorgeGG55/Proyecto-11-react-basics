@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PersonalWeather from '../components/PersonalWheather';
+import PersonalWeather from '../components/PersonalWheather/PersonalWheather';
 
 const Home = () => {
   return (

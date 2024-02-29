@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 
-const CitiesComponent = lazy(() => import('../components/CitiesComponent'));
+import CitiesComponent from '../components/CitiesComponent/CitiesComponent';
 
 const Cities = () => {
   return (

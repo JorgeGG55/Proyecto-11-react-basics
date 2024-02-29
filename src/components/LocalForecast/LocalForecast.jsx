@@ -1,5 +1,6 @@
 import React from 'react';
-import useWeatherData from '../hooks/useWeatherData';
+import useWeatherData from '../../hooks/useWeatherData';
+import './LocalForecast.css';
 
 const API_KEY = '8aa9acc3df268e90c8c4e6457d3254ab';
 
@@ -24,10 +25,9 @@ const LocalForecast = () => {
                     <img
                       src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
                       alt="Weather Icon"
-                      className="icon"
                     />
-                    <p className="temperature">{(item.main.temp - 273).toFixed(0)}°C</p>
-                    <p className="weatherDescription">{item.weather[0].description}</p>
+                    <p>{(item.main.temp - 273).toFixed(0)}°C</p>
+                    <p>{item.weather[0].description}</p>
                   </div>
                 ))}
               </div>

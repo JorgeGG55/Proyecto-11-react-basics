@@ -1,0 +1,34 @@
+.personalTempContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  margin-top: 8%;
+}
+
+.tempContainer {
+  display: flex;
+  align-items: center;
+}
+
+.localTemp {
+  font-weight: bold;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.weatherTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.weatherTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.tableLabel {
+  font-weight: bold;
+}

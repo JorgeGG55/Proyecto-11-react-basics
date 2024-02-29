@@ -43,6 +43,46 @@ const reducer = (state, action) => {
   }
 };
 
+const fetchWeatherData = async (latitude, longitude, API_KEY, dispatch) => {
+  try {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+    );
+    dispatch({ type: 'SET_WEATHER_DATA', payload: response.data });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: 'SET_ERROR', payload: 'Error fetching weather data.' });
+  }
+};
+
+const fetchForecastData = async (latitude, longitude, API_KEY, dispatch) => {
+  try {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+    );
+
+    const filteredForecast = response.data.list.reduce((acc, item) => {
+      const date = item.dt_txt.split(' ')[0];
+      if (!acc[date]) {
+        acc[date] = item;
+      }
+      return acc;
+    }, {});
+
+    dispatch({ type: 'SET_DAILY_FORECAST', payload: Object.values(filteredForecast) });
+    dispatch({
+      type: 'SET_LOCATION_INFO',
+      payload: {
+        name: response.data.city.name,
+        country: response.data.city.country
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: 'SET_ERROR', payload: 'Error fetching forecast data.' });
+  }
+};
+
 const useWeatherData = (API_KEY) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -68,54 +108,11 @@ const useWeatherData = (API_KEY) => {
   }, []);
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const { latitude, longitude } = state;
-        if (latitude && longitude) {
-          const response = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
-          );
-          dispatch({ type: 'SET_WEATHER_DATA', payload: response.data });
-        }
-      } catch (error) {
-        console.error(error);
-        dispatch({ type: 'SET_ERROR', payload: 'Error fetching weather data.' });
-      }
-    };
-
-    const fetchForecast = async () => {
-      try {
-        const { latitude, longitude } = state;
-        if (latitude && longitude) {
-          const response = await axios.get(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
-          );
-
-          const filteredForecast = response.data.list.reduce((acc, item) => {
-            const date = item.dt_txt.split(' ')[0];
-            if (!acc[date]) {
-              acc[date] = item;
-            }
-            return acc;
-          }, {});
-
-          dispatch({ type: 'SET_DAILY_FORECAST', payload: Object.values(filteredForecast) });
-          dispatch({
-            type: 'SET_LOCATION_INFO',
-            payload: {
-              name: response.data.city.name,
-              country: response.data.city.country
-            }
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        dispatch({ type: 'SET_ERROR', payload: 'Error fetching forecast data.' });
-      }
-    };
-
-    fetchWeather();
-    fetchForecast();
+    const { latitude, longitude } = state;
+    if (latitude !== null && longitude !== null) {
+      fetchWeatherData(latitude, longitude, API_KEY, dispatch);
+      fetchForecastData(latitude, longitude, API_KEY, dispatch);
+    }
   }, [state.latitude, state.longitude, API_KEY]);
 
   return { ...state };

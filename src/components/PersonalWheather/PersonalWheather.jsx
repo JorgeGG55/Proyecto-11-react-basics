@@ -1,5 +1,6 @@
 import React from 'react';
-import useWeatherData from '../hooks/useWeatherData';
+import useWeatherData from '../../hooks/useWeatherData';
+import './PersonalWheather.css';
 
 const API_KEY = '8aa9acc3df268e90c8c4e6457d3254ab';
 

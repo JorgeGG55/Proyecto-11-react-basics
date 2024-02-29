@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './CitiesComponent.css';
 
 const API_KEY = '8aa9acc3df268e90c8c4e6457d3254ab';
 
