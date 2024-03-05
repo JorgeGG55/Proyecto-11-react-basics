@@ -1,4 +1,5 @@
 import React from 'react';
+import './ForecastDay.css';
 
 const ForecastDay = ({ date, items }) => (
   <div className="dayColumn">
@@ -6,7 +7,7 @@ const ForecastDay = ({ date, items }) => (
     <div className="citieTempContainer">
       {items.map((item) => (
         <div key={item.dt_txt} className="tempCard">
-          <p className="tempTime">{item.dt_txt.split(' ')[1]}</p>
+          <p>{item.dt_txt.split(' ')[1]}</p>
           <div className="citieTempContainer">
             <img
               src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}

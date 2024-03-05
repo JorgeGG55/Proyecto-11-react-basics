@@ -1,0 +1,47 @@
+.dayColumn {
+  flex: 1;
+  width: auto;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.citieTempContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tempCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border-right: 1px solid white;
+}
+
+.dayColumn .tempCard:last-child {
+  border-right: none;
+  margin-right: 0;
+}
+
+.citieTemp {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .tempCard {
+    border-right: 0;
+    border-bottom: 1px solid white;
+  }
+
+  .citieTempContainer {
+    flex-direction: column;
+  }
+}

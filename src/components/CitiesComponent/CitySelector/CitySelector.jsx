@@ -1,4 +1,5 @@
 import React from 'react';
+import './CitySelector.css';
 
 const initialCities = [
   { name: 'New York', latitude: 40.7128, longitude: -74.006, country: 'US' },
