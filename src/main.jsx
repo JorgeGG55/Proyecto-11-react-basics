@@ -4,9 +4,11 @@ import App from './App.jsx';
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-const Home = lazy(() => import('./pages/Home.jsx'));
-const Local = lazy(() => import('./pages/Local.jsx'));
-const Cities = lazy(() => import('./pages/Cities.jsx'));
+const PersonalWeatherComponent = lazy(
+  () => import('./components/PersonalWheather/PersonalWheather.jsx')
+);
+const LocalForecastComponent = lazy(() => import('./components/LocalForecast/LocalForecast.jsx'));
+const CitiesComponent = lazy(() => import('./components/CitiesComponent/CitiesComponent.jsx'));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -17,15 +19,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             index
             element={
               <React.Suspense fallback={<h2>Cargando datos...</h2>}>
-                <Home />
+                <PersonalWeatherComponent />
               </React.Suspense>
             }
           />
           <Route
-            path="/local"
+            path="/localforecast"
             element={
               <React.Suspense fallback={<h2>Cargando datos...</h2>}>
-                <Local />
+                <LocalForecastComponent />
               </React.Suspense>
             }
           />
@@ -33,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/cities"
             element={
               <React.Suspense fallback={<h2>Cargando datos...</h2>}>
-                <Cities />
+                <CitiesComponent />
               </React.Suspense>
             }
           />

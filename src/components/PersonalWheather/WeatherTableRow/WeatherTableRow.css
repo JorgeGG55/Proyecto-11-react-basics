@@ -1,0 +1,9 @@
+.tableLabel {
+  font-weight: bold;
+}
+
+.weatherTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}

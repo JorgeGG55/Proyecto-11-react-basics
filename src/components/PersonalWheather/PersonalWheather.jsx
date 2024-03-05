@@ -1,64 +1,35 @@
 import React from 'react';
-import useWeatherData from '../../hooks/useWeatherData';
+import LocationHeader from '../LocationHeader/LocationHeader';
+import { useWeatherData } from '../../utils/useWeatherData';
+import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
+import TemperatureDisplay from './TemperatureDisplay/TemperatureDisplay';
+import WeatherTable from './WeatherTable/WeatherTable';
+import { fetchWeatherData, fetchForecastData } from '../../utils/weatherAPI';
 import './PersonalWheather.css';
 
-const API_KEY = '8aa9acc3df268e90c8c4e6457d3254ab';
+const PersonalWeatherComponent = () => {
+  const { weatherData, error } = useWeatherData(fetchWeatherData, fetchForecastData);
 
-const ElementoTabla = ({ label, value }) => (
-  <tr>
-    <td className="tableLabel">{label}:</td>
-    <td>{value}</td>
-  </tr>
-);
+  if (error) {
+    return <ErrorDisplay error={error} />;
+  }
 
-const PersonalWeather = () => {
-  const { weatherData, error } = useWeatherData(API_KEY);
+  if (!weatherData) {
+    return null;
+  }
 
   return (
-    <div>
-      {error ? (
-        <p>{error}</p>
-      ) : (
-        <>
-          {weatherData && (
-            <div className="personalTempContainer">
-              <h2>
-                {weatherData.name}, {weatherData.sys.country}
-              </h2>
-              <div className="tempContainer">
-                <img
-                  src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                  alt="Weather Icon"
-                />
-                <p className="localTemp">{(weatherData.main.temp - 273).toFixed(0)}°C</p>
-              </div>
-              <div>
-                <table className="weatherTable">
-                  <tbody>
-                    <ElementoTabla
-                      label="Feels like"
-                      value={(weatherData.main.feels_like - 273).toFixed(2) + '°C'}
-                    />
-                    <ElementoTabla label="Humidity" value={weatherData.main.humidity + '%'} />
-                    <ElementoTabla label="Pressure" value={weatherData.main.pressure + ' hPa'} />
-                    <ElementoTabla
-                      label="Max Temperature"
-                      value={(weatherData.main.temp_max - 273).toFixed(2) + '°C'}
-                    />
-                    <ElementoTabla
-                      label="Min Temperature"
-                      value={(weatherData.main.temp_min - 273).toFixed(2) + '°C'}
-                    />
-                    <ElementoTabla label="Wind Speed" value={weatherData.wind.speed + ' m/s'} />
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-        </>
-      )}
+    <div className="personalTempContainer">
+      <h2>
+        <LocationHeader cityName={weatherData.name} country={weatherData.sys.country} />
+      </h2>
+      <TemperatureDisplay
+        temperature={weatherData.main.temp - 273}
+        weatherIcon={weatherData.weather[0].icon}
+      />
+      <WeatherTable weatherData={weatherData} />
     </div>
   );
 };
 
-export default PersonalWeather;
+export default PersonalWeatherComponent;

@@ -1,0 +1,26 @@
+.navLink {
+  color: white;
+  background-color: #18bc9c;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 10%;
+  text-decoration: none;
+}
+
+nav {
+  width: 600px;
+}
+
+@media (max-width: 768px) {
+  .navLink {
+    margin-bottom: 10px;
+    margin-left: 0;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
