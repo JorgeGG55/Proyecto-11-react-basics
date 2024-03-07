@@ -1,6 +1,6 @@
 import React from 'react';
 import LocationHeader from '../LocationHeader/LocationHeader';
-import WeatherCard from './WeatherCard/WeatherCard';
+import WeatherCard from '../WeatherCard/WeatherCard';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import { useWeatherData } from '../../utils/useWeatherData';
 import { fetchWeatherData, fetchForecastData } from '../../utils/weatherAPI';

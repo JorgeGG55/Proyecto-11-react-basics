@@ -2,8 +2,8 @@ import React from 'react';
 import LocationHeader from '../LocationHeader/LocationHeader';
 import { useWeatherData } from '../../utils/useWeatherData';
 import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
-import TemperatureDisplay from './TemperatureDisplay/TemperatureDisplay';
-import WeatherTable from './WeatherTable/WeatherTable';
+import TemperatureDisplay from '../TemperatureDisplay/TemperatureDisplay';
+import WeatherTable from '../WeatherTable/WeatherTable';
 import { fetchWeatherData, fetchForecastData } from '../../utils/weatherAPI';
 import './PersonalWheather.css';
 

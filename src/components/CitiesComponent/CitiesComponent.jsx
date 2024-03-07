@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchWeatherAndForecast } from '../../utils/useWeatherData';
-import CitySelector from './CitySelector/CitySelector';
-import ForecastDay from './ForecastDay/ForecastDay';
+import CitySelector from '../CitySelector/CitySelector';
+import ForecastDay from '../ForecastDay/ForecastDay';
 import LocationHeader from '../LocationHeader/LocationHeader';
 import './CitiesComponent.css';
 
